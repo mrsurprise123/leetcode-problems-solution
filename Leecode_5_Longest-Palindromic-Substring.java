@@ -22,7 +22,7 @@ class Solution {
         for (int i = start, j = end - 1; i <= (start+end)/2 && j >= (start+end)/2; i++, j--) {
           if(s.charAt(i) != s.charAt(j)){
                 return false;
-            }
+            }[]
         }
         return true;
     }
@@ -75,4 +75,31 @@ private int expandAroundCenter(String s, int left, int right) {
         R++;
     }
     return R - L - 1;
+}
+
+class Solution {
+    public String longestPalindrome(String s) {
+        int max = 0;
+        int start = 0;
+        int end = 0;
+        boolean dp[][] = new boolean [s.length()][s.length()];
+
+        for(int i = 0; i < s.length(); i ++){
+            for(int j = 0; j <= i; j++){
+                if(s.charAt(i) == s.charAt(j) && (i - j < 2 || dp[j+1][i-1])){
+                    dp[j][i] = true;
+                }
+                else{
+                    dp[j][i] = false;
+                }
+
+                if(dp[j][i] && max < i - j + 1){
+                    max = i - j + 1;
+                    start = i;
+                    end = j + 1;
+                }
+            }
+        }
+        return s.substring(start,end);
+}
 }
